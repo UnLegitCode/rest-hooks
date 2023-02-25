@@ -1,0 +1,124 @@
+package ru.unlegit.resthooks;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public enum HttpStatus {
+
+    UNKNOWN(0),
+
+
+    //informational
+    CONTINUE(100),
+    SWITCHING_PROTOCOLS(101),
+    PROCESSING(102),
+    EARLY_HINTS(103),
+
+    //success
+    OK(200),
+    CREATED(201),
+    ACCEPTED(202),
+    NON_AUTHORITATIVE_INFORMATION(203),
+    NO_CONTENT(204),
+    RESET_CONTENT(205),
+    PARTIAL_CONTENT(206),
+    MULTI_STATUS(207),
+    ALREADY_REPORTED(208),
+
+    //redirection
+    MULTIPLE_CHOICES(300),
+    MOVED_PERMANENTLY(301),
+    MOVED_TEMPORARILY(302),
+    SEE_OTHER(303),
+    NOT_MODIFIED(304),
+    USE_PROXY(305),
+    RESERVED(306),
+    TEMPORARY_REDIRECT(307),
+    PERMANENT_REDIRECT(308),
+
+    //client error
+    BAD_REQUEST(400),
+    UNAUTHORIZED(401),
+    FORBIDDEN(402),
+    PAYMENT_REQUIRED(403),
+    NOT_FOUND(404),
+    METHOD_NOT_ALLOWED(405),
+    NOT_ACCEPTABLE(406),
+    PROXY_AUTHENTICATION_REQUIRED(407),
+    REQUEST_TIMEOUT(408),
+    CONFLICT(409),
+    GONE(410),
+    LENGTH_REQUIRED(411),
+    PRECONDITION_FAILED(412),
+    PAYLOAD_TOO_LARGE(413),
+    URI_TOO_LONG(414),
+    UNSUPPORTED_MEDIA_TYPE(415),
+    RANGE_NOT_SATISFIABLE(416),
+    EXPECTATION_FAILED(417),
+    IM_A_TEAPOT(418),
+    AUTHENTICATION_TIMEOUT(419),
+    MISDIRECTED_REQUEST(421),
+    UNPROCESSABLE_ENTITY(422),
+    LOCKED(423),
+    FAILED_DEPENDENCY(424),
+    TOO_EARLY(425),
+    UPGRADE_REQUIRED(426),
+    PRECONDITION_REQUIRED(428),
+    TOO_MANY_REQUESTS(429),
+    REQUEST_HEADER_FIELDS_TOO_LARGE(430),
+
+    //server error
+    INTERNAL_SERVER_ERROR(500),
+    NOT_IMPLEMENTED(501),
+    BAD_GATEWAY(502),
+    SERVICE_UNAVAILABLE(503),
+    GATEWAY_TIMEOUT(504),
+    HTTP_VERSION_NOT_SUPPORTED(505);
+
+    private final int code;
+
+    private static final HttpStatus[][] STATUSES = new HttpStatus[][]{
+            {
+                CONTINUE, SWITCHING_PROTOCOLS, PROCESSING, EARLY_HINTS
+            },
+            {
+                OK, CREATED, ACCEPTED,
+                NON_AUTHORITATIVE_INFORMATION, NO_CONTENT, RESET_CONTENT,
+                PARTIAL_CONTENT, MULTI_STATUS, ALREADY_REPORTED
+            },
+            {
+                MULTIPLE_CHOICES, MOVED_PERMANENTLY, MOVED_TEMPORARILY,
+                SEE_OTHER, NOT_MODIFIED, USE_PROXY,
+                RESERVED, TEMPORARY_REDIRECT, PERMANENT_REDIRECT
+            },
+            {
+                BAD_REQUEST, UNAUTHORIZED, PAYMENT_REQUIRED, FORBIDDEN,
+                NOT_FOUND, METHOD_NOT_ALLOWED, NOT_ACCEPTABLE, PROXY_AUTHENTICATION_REQUIRED,
+                REQUEST_TIMEOUT, CONFLICT, GONE, LENGTH_REQUIRED,
+                PRECONDITION_FAILED, PAYLOAD_TOO_LARGE, URI_TOO_LONG, UNSUPPORTED_MEDIA_TYPE,
+                RANGE_NOT_SATISFIABLE, EXPECTATION_FAILED, IM_A_TEAPOT, AUTHENTICATION_TIMEOUT,
+                null, MISDIRECTED_REQUEST, UNPROCESSABLE_ENTITY, LOCKED,
+                FAILED_DEPENDENCY, TOO_EARLY, UPGRADE_REQUIRED, null,
+                PRECONDITION_REQUIRED, TOO_MANY_REQUESTS, null, REQUEST_HEADER_FIELDS_TOO_LARGE
+            },
+            {
+                INTERNAL_SERVER_ERROR, NOT_IMPLEMENTED, BAD_GATEWAY,
+                SERVICE_UNAVAILABLE, GATEWAY_TIMEOUT, HTTP_VERSION_NOT_SUPPORTED
+            }
+    };
+
+    public static HttpStatus getStatus(int statusCode) {
+        int category = (statusCode / 100) - 1;
+        int id = statusCode % 100;
+
+        if (category > 4) return UNKNOWN;
+
+        HttpStatus[] categoryStatuses = STATUSES[category];
+
+        if (id >= categoryStatuses.length) return UNKNOWN;
+
+        HttpStatus status = categoryStatuses[id];
+
+        return status == null ? UNKNOWN : status;
+    }
+}
