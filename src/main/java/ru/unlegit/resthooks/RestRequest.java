@@ -1,10 +1,10 @@
 package ru.unlegit.resthooks;
 
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.RequestBody;
-import javafx.util.Pair;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import ru.unlegit.resthooks.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,13 +16,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RestRequest {
 
-    private static final MediaType CONTENT_TYPE = MediaType.parse(
-            "application/json"
-    );
-    private static final RequestBody EMPTY_BODY = RequestBody.create(
-            CONTENT_TYPE,
-            new byte[0]
-    );
+    private static final MediaType CONTENT_TYPE = MediaType.parse("application/json");
+    private static final RequestBody EMPTY_BODY = RequestBody.create(new byte[0]);
 
     final HttpMethod method;
     @NonNull
@@ -54,12 +49,12 @@ public class RestRequest {
     }
 
     public void setBody(String json) {
-        body = RequestBody.create(CONTENT_TYPE, json);
+        body = RequestBody.create(json, CONTENT_TYPE);
     }
 
     public String compactPath() {
         String params = parameters.stream()
-                .map(pair -> pair.getKey() + "=" + pair.getValue())
+                .map(pair -> pair.left() + "=" + pair.right())
                 .reduce((s, s2) -> s + "&" + s2)
                 .orElse("");
 

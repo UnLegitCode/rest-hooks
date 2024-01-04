@@ -1,10 +1,10 @@
 package ru.unlegit.resthooks;
 
-import javafx.util.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import ru.unlegit.resthooks.util.Pair;
 
 import java.util.Map;
 

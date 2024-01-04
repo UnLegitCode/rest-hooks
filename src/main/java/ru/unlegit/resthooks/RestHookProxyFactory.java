@@ -1,6 +1,5 @@
 package ru.unlegit.resthooks;
 
-import javafx.util.Pair;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import ru.unlegit.resthooks.annotation.*;
@@ -10,6 +9,7 @@ import ru.unlegit.resthooks.parameter.BodyParameter;
 import ru.unlegit.resthooks.parameter.HeaderParameter;
 import ru.unlegit.resthooks.parameter.ParamParameter;
 import ru.unlegit.resthooks.parameter.RestParameter;
+import ru.unlegit.resthooks.util.Pair;
 
 import java.lang.reflect.*;
 import java.util.Arrays;

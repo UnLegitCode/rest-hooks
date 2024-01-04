@@ -10,7 +10,7 @@ public class UserServiceHookTest {
 
     @SneakyThrows
     public static void main(String[] args) {
-        RequestExecutor requestExecutor = new OkHttpRequestExecutor(new GsonCodec(new Gson()));
+        RequestExecutor requestExecutor = new OkHttpRequestExecutor(new GsonCodec(new Gson()), null);
         UserServiceHook userServiceHook = requestExecutor.implementHook(UserServiceHook.class);
 
         testRegister(userServiceHook);
